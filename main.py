@@ -1,20 +1,16 @@
-import pandas as pd
 import streamlit as st
-import plotly.express as px
+import pandas as pd
 
-df = pd.read_csv('euro2024_players.csv')
+df = pd.read_csv('src/euro2024_players.csv')
 
-# Calculando a distribuição de idade
-idade_distribuicao = df['Age'].value_counts().sort_index().reset_index()
-idade_distribuicao.columns = ['Idade', 'Número de Jogadores']
 
-st.title('Distribuição de Idade')
+def pages():
+    st.title("Paginas")
 
-tipo_grafico = st.selectbox('Selecione o tipo de gráfico', ['Barra', 'Linha'])
 
-if tipo_grafico == 'Barra':
-    fig = px.bar(idade_distribuicao, x='Idade', y='Número de Jogadores', title='Distribuição de Idade')
-else:
-    fig = px.line(idade_distribuicao, x='Idade', y='Número de Jogadores', title='Distribuição de Idade')
-
-st.plotly_chart(fig)
+pg = st.navigation([
+    st.Page("idades.py", title="Distribuição de idade"),
+    st.Page("altura.py", title="Altura media dos jogadores"),
+    st.Page("pe_dominante.py", title="Pe dominante dos jogadores"),
+])
+pg.run()
